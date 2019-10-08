@@ -1,12 +1,12 @@
-CREATE SEQUENCE IF NOT EXISTS order_id_seq
+CREATE SEQUENCE IF NOT EXISTS purchase_id_seq
  INCREMENT 1
  MINVALUE 1
  MAXVALUE 9223372036854775807
  START 1
  CACHE 1;
 
-CREATE TABLE IF NOT EXISTS "order" (
-  order_id bigint NOT NULL PRIMARY KEY DEFAULT nextval('order_id_seq'),
+CREATE TABLE IF NOT EXISTS purchase (
+  purchase_id bigint NOT NULL PRIMARY KEY DEFAULT nextval('purchase_id_seq'),
   status varchar(100) NOT NULL,
   created TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   store_id bigint NOT NULL REFERENCES store(store_id)

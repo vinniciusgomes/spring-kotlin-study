@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS order_item (
   created TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   quantity INTEGER NOT NULL,
   price DECIMAL(10, 5),
-  order_id bigint NOT NULL REFERENCES "order"(order_id)
+  purchase_id bigint NOT NULL REFERENCES purchase(purchase_id)
 );
