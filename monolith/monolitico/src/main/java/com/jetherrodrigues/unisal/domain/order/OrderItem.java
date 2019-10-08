@@ -11,7 +11,8 @@ import java.util.Objects;
 public final class OrderItem implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "order_item_id_seq", sequenceName = "order_item_id_seq", allocationSize = 1)
+    @GeneratedValue(generator="order_item_id_seq", strategy=GenerationType.SEQUENCE)
     @Column(name = "order_item_id")
     private long id;
     private String description;
@@ -19,9 +20,18 @@ public final class OrderItem implements Serializable {
     private int quantity;
     @Column(name = "price")
     private BigDecimal price;
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "purchase_id")
+    private Order purchase;
+
+    public OrderItem(){}
+
+    private OrderItem(final OrderItem item, final Order order) {
+        this.description = item.description;
+        this.quantity = item.quantity;
+        this.price = item.price;
+        this.purchase = order;
+    }
 
     public long getId() {
         return id;
@@ -43,8 +53,12 @@ public final class OrderItem implements Serializable {
         return price;
     }
 
-    public Order getOrder() {
-        return order;
+    public Order getPurchase() {
+        return purchase;
+    }
+
+    public static OrderItem of(final OrderItem item, final Order order) {
+        return new OrderItem(item, order);
     }
 
     @Override
@@ -55,12 +69,12 @@ public final class OrderItem implements Serializable {
         return id == orderItem.id &&
                 quantity == orderItem.quantity &&
                 price.equals(orderItem.price) &&
-                order.equals(orderItem.order);
+                purchase.equals(orderItem.purchase);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, quantity, price, order);
+        return Objects.hash(id, quantity, price, purchase);
     }
 
     @Override
@@ -71,7 +85,7 @@ public final class OrderItem implements Serializable {
                 ", created=" + created +
                 ", quantity=" + quantity +
                 ", price=" + price +
-                ", order=" + order +
+                ", order=" + purchase +
                 '}';
     }
 }

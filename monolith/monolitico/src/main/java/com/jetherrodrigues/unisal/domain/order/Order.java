@@ -1,21 +1,25 @@
 package com.jetherrodrigues.unisal.domain.order;
 
 import com.jetherrodrigues.unisal.domain.store.Store;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order")
+@Table(name = "purchase")
 public final class Order implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
+    @SequenceGenerator(name = "purchase_id_seq", sequenceName = "purchase_id_seq", allocationSize = 1)
+    @GeneratedValue(generator="purchase_id_seq", strategy=GenerationType.SEQUENCE)
+    @Column(name = "purchase_id")
     private long id;
     private LocalDateTime created = LocalDateTime.now();
     @Enumerated(EnumType.STRING)
@@ -23,8 +27,10 @@ public final class Order implements Serializable {
     @OneToOne
     @JoinColumn(name = "store_id")
     private Store store;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<OrderItem> items = new ArrayList<OrderItem>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "purchase_id")
+    @Fetch(FetchMode.SUBSELECT)
+    private List<OrderItem> items = new ArrayList<>();
 
     public Order(){}
 
@@ -51,7 +57,15 @@ public final class Order implements Serializable {
     }
 
     public List<OrderItem> getItems() {
-        return items;
+        return Collections.unmodifiableList(items);
+    }
+
+    public void add(final OrderItem item) {
+        this.items.add(item);
+    }
+
+    public void addAll(final List<OrderItem> items) {
+        this.items.addAll(items);
     }
 
     @Override
