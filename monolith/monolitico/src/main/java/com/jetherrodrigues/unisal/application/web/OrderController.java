@@ -24,7 +24,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping
-    @Transactional
+    // @Transactional
     public ResponseEntity<?> create(@RequestBody @Valid final OrderRequest request,
                                     final UriComponentsBuilder uriBuilder) {
 
