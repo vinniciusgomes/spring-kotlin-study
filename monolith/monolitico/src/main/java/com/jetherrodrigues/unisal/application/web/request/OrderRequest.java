@@ -12,10 +12,8 @@ import java.util.List;
 public final class OrderRequest {
 
     @NotNull
-    @NotEmpty
     private OrderStatus status;
     @NotNull
-    @NotEmpty
     private Store store;
     @NotNull
     @NotEmpty
