@@ -22,7 +22,7 @@ public final class Order implements Serializable {
     @Column(name = "purchase_id")
     private long id;
     private LocalDateTime created = LocalDateTime.now();
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private OrderStatus status = OrderStatus.OPENED;
     @OneToOne
     @JoinColumn(name = "store_id")
