@@ -1,0 +1,47 @@
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+Irei utilizar este bloco de notas para compartilhar links e demais
+----------------------------------------------------------------------------------------
+Apresentação:
+- https://pt.slideshare.net/jetherrodrigues/jugvale-14-14092019
+
+GitHub
+- https://github.com/jether2011/unisal-minicursos
+
+- git clone https://github.com/jether2011/unisal-minicursos.git
+
+Projeto
+spring_profiles_active=dev
+
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+docker-compose -f postgres-compose.yaml up -d
+
+----------------------------------------------------------------------------------------
+PGADMIN		
+----------------------------------------------------------------------------------------
+http://localhost:5555
+login: minicurso@dev.com
+pass: PgAdmin2019!
+
+----------------------------------------------------------------------------------------
+CURL
+----------------------------------------------------------------------------------------
+POST store
+
+curl -X POST \
+  http://localhost:8091/stores \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: b017f22e-b7fa-4805-ab1c-7186e9dbe216' \
+  -H 'cache-control: no-cache' \
+  -d '{
+	"name": "nike"
+}'
+
+GET store
+
+curl -X GET \
+  http://localhost:8091/stores \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: f839c8dd-b8f1-4903-97db-faa7637f956e' \
+  -H 'cache-control: no-cache
